@@ -8,10 +8,13 @@ Gem::Specification.new do |gem|
   gem.version       = Rightnow::VERSION
   gem.authors       = ["Adrien Jarthon"]
   gem.email         = ["adrien.jarthon@dimelo.com"]
-  gem.description   = %q{Ruby wrapper for the Oracle Rightnow Social API v2}
+  gem.description   = %q{Ruby wrapper for the Rightnow API}
   gem.summary       = %q{Ruby wrapper for the Oracle Rightnow Social API v2}
-  gem.homepage      = ""
+  gem.homepage      = "https://github.com/dimelo/rightnow"
 
+  gem.add_dependency 'faraday', '>= 0.8.0'
+  gem.add_development_dependency 'rspec', '~> 2.6'
+  gem.add_development_dependency 'webmock', '~> 1.8'
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
