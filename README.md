@@ -1,5 +1,7 @@
 # Rightnow
 
+[![Build Status](https://travis-ci.org/dimelo/rightnow.png?branch=master)](https://travis-ci.org/dimelo/rightnow)
+
 Ruby wrapper for the Oracle Rightnow Social API v2
 
 ## Installation
