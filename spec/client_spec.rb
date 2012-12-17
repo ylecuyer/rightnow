@@ -22,9 +22,30 @@ describe Rightnow::Client do
 
   describe "#request" do
     it "compute correct request" do
-      stub = stub_request :get, "http://something/api/endpoint?Action=UserList&ApiKey=API&PermissionedAs=hl_api&Signature=XOyBquzX6vM8b5DO6/By5saSKho=&SignatureVersion=2&format=json&version=2010-05-15"
-      client.request 'UserList'
+      stub = stub_request(:get, "http://something/api/endpoint?Action=UserList&ApiKey=API&PermissionedAs=hl_api&Signature=XOyBquzX6vM8b5DO6/By5saSKho=&SignatureVersion=2&format=json&version=2010-05-15").to_return :body => '{}'
+      client.request('UserList').should == {}
       stub.should have_been_requested
+    end
+
+    it "raise correct exceptions on 401" do
+      stub_request(:get, /\Ahttp.*/).to_return(:status => 401, :body => '{"error":{"message":"invalid parameter","code":42}}')
+      expect {
+        client.request 'UserList'
+      }.to raise_error(Rightnow::Error, "invalid parameter (42)")
+    end
+
+    it "raise correct exceptions on error without details" do
+      stub_request(:get, /\Ahttp.*/).to_return(:status => 401, :body => '{"something":"happened"}')
+      expect {
+        client.request 'UserList'
+      }.to raise_error(Rightnow::Error, 'API returned 401 without explanation: {"something":"happened"}')
+    end
+
+    it "raise correct exceptions on bad JSON" do
+      stub_request(:get, /\Ahttp.*/).to_return(:status => 200, :body => 'bad')
+      expect {
+        client.request 'UserList'
+      }.to raise_error(Rightnow::Error, 'Bad JSON received: "bad"')
     end
   end
 

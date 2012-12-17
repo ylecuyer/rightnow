@@ -1,2 +1,4 @@
-require "rightnow/version"
-require "rightnow/client"
+require 'rightnow/version'
+
+require 'rightnow/error'
+require 'rightnow/client'

@@ -1,6 +1,7 @@
 require 'openssl'
 require 'base64'
 require 'faraday'
+require 'json'
 
 module Rightnow
   class Client
@@ -19,7 +20,18 @@ module Rightnow
     end
 
     def request action, opts = {}
-      @conn.get 'api/endpoint', signed_params(action, opts)
+      response = @conn.get 'api/endpoint', signed_params(action, opts)
+      body = JSON.parse(response.body || '')
+      if response.status != 200
+        if body['error'].is_a?(Hash)
+          raise Rightnow::Error.new(body['error']['message'], body['error']['code'])
+        else
+          raise Rightnow::Error.new("API returned #{response.status} without explanation: #{response.body}")
+        end
+      end
+      body
+    rescue JSON::ParserError
+      raise Rightnow::Error.new("Bad JSON received: #{response.body.inspect}")
     end
 
   protected

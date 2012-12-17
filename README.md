@@ -18,7 +18,17 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Instanciate a new client with your community url and API keys:
+
+```ruby
+client = Rightnow::Client.new "http://community.company.com", :api_key => "YOUR_PUBLIC_KEY", :secret_key => "YOUR_PRIVATE_KEY"
+```
+
+Then you can query the API with:
+
+```ruby
+client.request 'UserList', :as => 'admin@domain.com'
+```
 
 ## Contributing
 
