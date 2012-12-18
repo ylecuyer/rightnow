@@ -47,6 +47,16 @@ describe Rightnow::Client do
         client.request 'UserList'
       }.to raise_error(Rightnow::Error, 'Bad JSON received: "bad"')
     end
+
+    it "parse JSON response correctly" do
+      stub_request(:get, /\Ahttp.*/).
+        to_return(:status => 200, :body => fixture('search.json'))
+      result = client.request 'Search'
+      result.should include("searchResults", "totalCount")
+      result["totalCount"].should == 1
+      result["searchResults"].should have(1).item
+      result["searchResults"].first.should == fixture('post.rb', :ruby)
+    end
   end
 
   describe "#signed_params" do

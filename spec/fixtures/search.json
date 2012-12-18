@@ -1,0 +1,34 @@
+{
+    "searchResults": [
+        {
+            "id": 58,
+            "hash": "fa8e6cc713",
+            "webUrl": "http://communityname.com/posts/fa8e6cc713",
+            "apiUrl": "http://communityname.com/api/posts/fa8e6cc713",
+            "status": 1,
+            "eventStart": null,
+            "eventEnd": null,
+            "eventTimeZone": "",
+            "hiveId": 72,
+            "postTypeId": 109,
+            "postTypeName": "White Page Tester",
+            "answerId": null,
+            "answerSelectedById": null,
+            "answerSelected": null,
+            "created": 1250703211,
+            "createdById": 2,
+            "createdByName": "HiveLive Root User",
+            "createdByHash": "xxyyzzoopp",
+            "createdByAvatar": "http://communityname.com/common/images/avatars/user/default.jpg",
+            "lastActivity": 1250703252,
+            "name": "White Page Tester",
+            "commentCount": 1,
+            "flagCount": 0,
+            "viewCount": 0,
+            "ratingCount": 0,
+            "ratingTotal": 0,
+            "preview": "White Page Tester White Page Tester White Page ..."
+        }
+    ],
+    "totalCount": 1
+}
