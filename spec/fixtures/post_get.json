@@ -1,0 +1,55 @@
+{
+  "post":{
+    "uri":"http://communityname.com/api/posts/81d3c4ebd8",
+    "postType":{
+      "uri":"http://communityname.com/api/hives/8054cbc1b4/types/97",
+      "name":"Onderwerp"
+    },
+    "created":1354694056,
+    "createdBy":{
+      "hash":"45394358f2",
+      "uri":"http://communityname.com/api/users/45394358f2",
+      "loginId":"45394358f2",
+      "name":"Elsa",
+      "avatar":"http://communityname.com/files/b6eec94a24/mickey_plays_accordion.gif"
+    },
+    "lastEdited":1355333163,
+    "lastEditedBy":{
+      "hash":"45394358f2",
+      "uri":"http://communityname.com/api/users/45394358f2",
+      "loginId":"45394358f2",
+      "name":"Elsa",
+      "avatar":"http://communityname.com/files/b6eec94a24/mickey_plays_accordion.gif"
+    },
+    "eventStart":"1970-01-01T00:00:00+00:00",
+    "eventEnd":"1970-01-01T00:00:00+00:00",
+    "eventTimeZone":"",
+    "title":"Decoder V4: firmware update Charles2_2.7.5.62  (04\/12\/12)",
+    "status":1,
+    "commentCount":65,
+    "viewCount":795,
+    "ratingCount":0,
+    "ratingTotal":0,
+    "flagCount":0,
+    "fields":
+    [{
+      "id":40695,
+      "postTypeField":{
+        "name":"Titel",
+        "type":1
+      },
+      "value":"Decoder V4: firmware update Charles2_2.7.5.62  (04\/12\/12)"
+    },{
+      "id":40696,
+      "postTypeField":{
+          "name":"Content",
+          "type":4
+      },
+      "value":"<h3>\r\n\t<a href=\"http:\/\/communityname.com\/posts\/81d3c4ebd8\"><span style=\"color: rgb(0, 0, 0);\">&bull;&nbsp;<em>Decoder V4: firmware update Charles2_2.7.5.62 (04 dec 2012)<\/em><\/span><\/a><\/h3>\r\n<h4>\r\n\t<span style=\"color: red;\">zie ook ten gevolge van de nieuwe Charles software&nbsp; de bijgekomen Apps<br \/>\r\n\t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <\/span><span style=\"color: rgb(0, 0, 0);\">&bull;Klik Hier op onderstaand link; <span style=\"font-size: x-large;\">\u261e<\/span>&nbsp;<\/span>&nbsp;<a href=\"http:\/\/communityname.com\/comment\/92565\" target=\"_blank\"> apps op Belgacom TV <\/a><\/h4>\r\n<p>\r\n\t<a href=\"http:\/\/www.youtube.com\/watch?feature=player_embedded&amp;v=ytBT9SRxAr0\" target=\"_blank\">Belgacom TV demo - Hoe de interactieve apps gebruiken ?<\/a><\/p>\r\n<p>\r\n\t&nbsp;<\/p>\r\n<p style=\"margin-left: 80px;\">\r\n\tvorige versie :&nbsp;<span style=\"color: rgb(0, 0, 0);\">&bull;&nbsp;<strong><span style=\"font-size: x-large;\">\u261e<\/span><\/strong><\/span>&nbsp;&nbsp; <a href=\"http:\/\/communityname.com\/posts\/ddbdbfe4e7\/\">Decoder V4: firmware update Charles1_2.7.2.248 (25\/09\/12)<\/a><\/p>"
+    }],
+    "error":{
+      "message":"Error authenticating the PermissionedAs user, invalid value.",
+      "code":"35"
+    }
+  }
+}

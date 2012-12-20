@@ -11,5 +11,6 @@ end
 def fixture file, parser=nil
   res = File.read("spec/fixtures/#{file}")
   res = eval(res) if parser == :ruby
+  res = JSON.parse(res) if parser == :json
   res
 end

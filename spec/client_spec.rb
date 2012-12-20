@@ -51,11 +51,9 @@ describe Rightnow::Client do
     it "parse JSON response correctly" do
       stub_request(:get, /\Ahttp.*/).
         to_return(:status => 200, :body => fixture('search.json'))
-      result = client.request 'Search'
-      result.should include("searchResults", "totalCount")
-      result["totalCount"].should == 1
-      result["searchResults"].should have(1).item
-      result["searchResults"].first.should == fixture('post.rb', :ruby)
+      results = client.request 'Search'
+      results.should have(5).items
+      results.first.should == fixture('post.rb', :ruby)
     end
   end
 
