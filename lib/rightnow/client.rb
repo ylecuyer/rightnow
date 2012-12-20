@@ -34,7 +34,7 @@ module Rightnow
     #   +search :term => 'white', :sort => 'az', :limit => 50, :page => 1+
     #
     def search opts = {}
-      opts[:limit] ||= 5
+      opts[:limit] ||= 20
       opts[:objects] ||= 'Posts'
       opts[:start] ||= (opts[:page] - 1) * opts[:limit] + 1 if opts[:page]
       results = request 'Search', opts
@@ -49,7 +49,7 @@ module Rightnow
     #
     # returns::
     #   A single element or an array of Rightnow::Post
-    #   depending on the argument (value or array)
+    #   depending on the argument (single value or array)
     #
     # example::
     #   +post_get ["fa8e6cc713", "fa8e6cb714"]+
@@ -58,11 +58,21 @@ module Rightnow
       responses = nil
       @conn.in_parallel do
         responses = [posts].flatten.map do |post|
-          hash = post.respond_to?(:hash) ? post.hash : post
+          hash = post.is_a?(Post) ? post.hash : post
           @conn.get 'api/endpoint', signed_params('PostGet', 'postHash' => hash)
         end
       end
-      result = responses.map {|res| Rightnow::Post.new(parse(res)['post'].underscore) }
+      result = responses.zip([posts].flatten).map do |res, post|
+        data = parse(res).underscore['post']
+        if post.is_a? Post
+          post.attributes = data
+          post
+        elsif data.is_a? Hash
+          Rightnow::Post.new(data.merge(:hash => post))
+        else
+          nil
+        end
+      end
       posts.is_a?(Array) ? result : result.first
     end
 
@@ -73,7 +83,6 @@ module Rightnow
   protected
 
     def parse response
-#      puts response.body
       body = JSON.parse(response.body || '')
       if response.status != 200
         if body['error'].is_a?(Hash)

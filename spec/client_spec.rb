@@ -20,36 +20,86 @@ describe Rightnow::Client do
     end
   end
 
+  describe '#search' do
+    it "compute correct request" do
+      stub_request(:get, "http://something/api/endpoint?Action=Search&ApiKey=API&PermissionedAs=hl_api&Signature=3LOgM56NN477w7BEVbP5kWb3gLs=&SignatureVersion=2&format=json&limit=20&objects=Posts&page=2&sort=az&start=21&term=white&version=2010-05-15").to_return :body => '[]'
+      client.search(:term => 'white', :sort => 'az', :page => 2).should == []
+    end
+
+    it "returns correctly parsed response" do
+      stub_request(:get, /.*/).to_return :body => fixture('search.json')
+      response = client.search
+      response.should have(5).items
+      response.first.should be_instance_of(Rightnow::Post)
+    end
+  end
+
+  describe '#post_get' do
+    it "compute correct request" do
+      stub_request(:get, "http://something/api/endpoint?Action=PostGet&ApiKey=API&PermissionedAs=hl_api&Signature=9KMnRws3GxJVuIgU8xTaeq5Y2C0=&SignatureVersion=2&format=json&postHash=fa8e6cc713&version=2010-05-15").to_return :body => '{}'
+      client.post_get("fa8e6cc713").should be_nil
+    end
+
+    context "with stubbed result" do
+      before { stub_request(:get, /.*/).to_return :body => fixture('post_get.json') }
+
+      it "returns correctly parsed response" do
+        response = client.post_get "fa8e6cc713"
+        response.should be_instance_of(Rightnow::Post)
+        response.view_count.should == 795
+      end
+
+      it "accepts multiple elements" do
+        posts = client.post_get ["fa8e6cc713", "fa8e6cb714"]
+        posts.should have(2).items
+        posts.first.should be_instance_of(Rightnow::Post)
+      end
+
+      it "accepts Rightnow::Post instances" do
+        post = Rightnow::Post.new(:hash => "fa8e6cc713")
+        res = client.post_get post
+        res.should be_instance_of(Rightnow::Post)
+        res.view_count.should == 795
+      end
+
+      it "merges input Rightnow::Post instance with results" do
+        post = Rightnow::Post.new(:hash => "fa8e6cc713")
+        res = client.post_get post
+        res.view_count.should == 795
+        res.hash.should == "fa8e6cc713"
+      end
+    end
+  end
+
   describe "#request" do
     it "compute correct request" do
-      stub = stub_request(:get, "http://something/api/endpoint?Action=UserList&ApiKey=API&PermissionedAs=hl_api&Signature=XOyBquzX6vM8b5DO6/By5saSKho=&SignatureVersion=2&format=json&version=2010-05-15").to_return :body => '{}'
+      stub_request(:get, "http://something/api/endpoint?Action=UserList&ApiKey=API&PermissionedAs=hl_api&Signature=XOyBquzX6vM8b5DO6/By5saSKho=&SignatureVersion=2&format=json&version=2010-05-15").to_return :body => '{}'
       client.request('UserList').should == {}
-      stub.should have_been_requested
     end
 
     it "raise correct exceptions on 401" do
-      stub_request(:get, /\Ahttp.*/).to_return(:status => 401, :body => '{"error":{"message":"invalid parameter","code":42}}')
+      stub_request(:get, /.*/).to_return(:status => 401, :body => '{"error":{"message":"invalid parameter","code":42}}')
       expect {
         client.request 'UserList'
       }.to raise_error(Rightnow::Error, "invalid parameter (42)")
     end
 
     it "raise correct exceptions on error without details" do
-      stub_request(:get, /\Ahttp.*/).to_return(:status => 401, :body => '{"something":"happened"}')
+      stub_request(:get, /.*/).to_return(:status => 401, :body => '{"something":"happened"}')
       expect {
         client.request 'UserList'
       }.to raise_error(Rightnow::Error, 'API returned 401 without explanation: {"something":"happened"}')
     end
 
     it "raise correct exceptions on bad JSON" do
-      stub_request(:get, /\Ahttp.*/).to_return(:status => 200, :body => 'bad')
+      stub_request(:get, /.*/).to_return(:status => 200, :body => 'bad')
       expect {
         client.request 'UserList'
       }.to raise_error(Rightnow::Error, 'Bad JSON received: "bad"')
     end
 
     it "parse JSON response correctly" do
-      stub_request(:get, /\Ahttp.*/).
+      stub_request(:get, /.*/).
         to_return(:status => 200, :body => fixture('search.json'))
       results = client.request 'Search'
       results.should have(5).items
@@ -72,6 +122,14 @@ describe Rightnow::Client do
 
       it { should include('PermissionedAs' => 'email@domain.com') }
       it { should include('Signature' => 'i66NBNtwG21kxDHYOVMQpb7bhzk=') }
+      it { should_not include('as') }
+    end
+
+    context "with custom values" do
+      subject { client.send :signed_params, "Something", 'term' => 'white' }
+
+      it { should include('Signature' => 'L2GWOnez54VB3ywBB2Om332z9FE=') }
+      it { should include('term' => 'white') }
     end
   end
 end
