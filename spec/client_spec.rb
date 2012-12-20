@@ -47,6 +47,7 @@ describe Rightnow::Client do
         response = client.post_get "fa8e6cc713"
         response.should be_instance_of(Rightnow::Post)
         response.view_count.should == 795
+        response.hash.should == "fa8e6cc713"
       end
 
       it "accepts multiple elements" do
