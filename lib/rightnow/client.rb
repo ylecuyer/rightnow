@@ -36,7 +36,7 @@ module Rightnow
     def search opts = {}
       opts[:limit] ||= 20
       opts[:objects] ||= 'Posts'
-      opts[:start] ||= (opts[:page] - 1) * opts[:limit] + 1 if opts[:page]
+      opts[:start] ||= (opts.delete(:page) - 1) * opts[:limit] + 1 if opts[:page]
       results = request 'Search', opts
       results.map {|r| Rightnow::Post.new(r.underscore) }
     end

@@ -22,7 +22,7 @@ describe Rightnow::Client do
 
   describe '#search' do
     it "compute correct request" do
-      stub_request(:get, "http://something/api/endpoint?Action=Search&ApiKey=API&PermissionedAs=hl_api&Signature=3LOgM56NN477w7BEVbP5kWb3gLs=&SignatureVersion=2&format=json&limit=20&objects=Posts&page=2&sort=az&start=21&term=white&version=2010-05-15").to_return :body => '[]'
+      stub_request(:get, "http://something/api/endpoint?Action=Search&ApiKey=API&PermissionedAs=hl_api&Signature=3LOgM56NN477w7BEVbP5kWb3gLs=&SignatureVersion=2&format=json&limit=20&objects=Posts&sort=az&start=21&term=white&version=2010-05-15").to_return :body => '[]'
       client.search(:term => 'white', :sort => 'az', :page => 2).should == []
     end
 
