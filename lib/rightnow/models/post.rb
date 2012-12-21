@@ -44,8 +44,12 @@ module Rightnow
       Time.at(created)
     end
 
+    def last_edited_at
+      Time.at(last_edited)
+    end
+
     def last_activity_at
-      Time.at(created)
+      Time.at(last_activity)
     end
 
   end

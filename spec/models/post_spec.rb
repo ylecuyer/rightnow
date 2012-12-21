@@ -13,7 +13,7 @@ describe Rightnow::Post do
       post.hive_id.should == 72
       post.created.should == 1250703211
       post.created_at.should == Time.utc(2009, 8, 19, 17, 33, 31)
-      post.last_activity_at.should == Time.utc(2009, 8, 19, 17, 33, 31)
+      post.last_activity_at.should == Time.utc(2009, 8, 19, 17, 34, 12)
       post.preview.should =~ /White Page Tester/
       post.post_type.should == {'id' => 109}
       post.answer_id.should be_nil

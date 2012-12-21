@@ -2,7 +2,7 @@ require 'virtus'
 require 'rightnow/models/user'
 
 module Rightnow
-  class Post
+  class Comment
     include Virtus
 
     attribute :id, Integer
@@ -10,7 +10,7 @@ module Rightnow
     attribute :uri, String
     attribute :status, Integer
     attribute :created, Integer
-    attribute :created_at, User
+    attribute :created_by, User
     attribute :last_edited, Integer
     attribute :last_edited_by, User
     attribute :rating_count, Integer
@@ -18,5 +18,13 @@ module Rightnow
     attribute :rating_weighted, Integer
     attribute :flagged_count, Integer
     attribute :value, String
+
+    def created_at
+      Time.at(created)
+    end
+
+    def last_edited_at
+      Time.at(last_edited)
+    end
   end
 end
