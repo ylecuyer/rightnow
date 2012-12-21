@@ -76,6 +76,24 @@ module Rightnow
       posts.is_a?(Array) ? result : result.first
     end
 
+    # Retrieve comment list for a post.
+    #
+    # post::
+    #   An instance of Rightnow::Post or a post hash (String)
+    #
+    # returns::
+    #   An array of Rightnow::Comment
+    #
+    # example::
+    #   +comment_list "fa8e6cc713"+
+    #
+    def comment_list post, opts = {}
+      hash = post.is_a?(Post) ? post.hash : post
+      results = request 'CommentList', opts.merge('postHash' => hash)
+      raise Rightnow::Error.new("Missing `comments` key in CommentList response: #{results.inspect}") if not results['comments']
+      results.underscore['comments'].map { |r| Rightnow::Comment.new(r) }
+    end
+
     def request action, opts = {}
       parse @conn.get('api/endpoint', signed_params(action, opts))
     end

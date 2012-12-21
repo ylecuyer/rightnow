@@ -40,7 +40,7 @@ describe Rightnow::Client do
       client.post_get("fa8e6cc713").should be_nil
     end
 
-    context "with stubbed result" do
+    context "with stubbed answer" do
       before { stub_request(:get, /.*/).to_return :body => fixture('post_get.json') }
 
       it "returns correctly parsed response" do
@@ -68,6 +68,32 @@ describe Rightnow::Client do
         res = client.post_get post
         res.view_count.should == 795
         res.hash.should == "fa8e6cc713"
+      end
+    end
+  end
+
+  describe '#comment_list' do
+    it "compute correct request" do
+      stub_request(:get, "http://something/api/endpoint?Action=CommentList&ApiKey=API&PermissionedAs=toto&Signature=0J8ggfqObzTGxydijxgdLSvNzds=&SignatureVersion=2&format=json&postHash=fa8e6cc713&version=2010-05-15").to_return :body => '{"comments": []}'
+      client.comment_list("fa8e6cc713", as: 'toto').should == []
+      # the `as: 'toto'` hack is just here to change the signature,
+      # webmock doesn't like the original one: AEyyp+MpfxT/DlhRqAfzvT1dFCM
+    end
+
+    it "raise error in case of bad return value" do
+      stub_request(:get, /.*/).to_return body: '{}'
+      expect {
+        client.comment_list "fa8e6cc713"
+      }.to raise_error(Rightnow::Error, "Missing `comments` key in CommentList response: {}")
+    end
+
+    context "with stubbed answer" do
+      before { stub_request(:get, /.*/).to_return body: fixture('comment_list.json') }
+
+      it "returns correctly parsed response" do
+        response = client.comment_list "fa8e6cc713"
+        response.should have(3).items
+        response.first.should be_instance_of(Rightnow::Comment)
       end
     end
   end
