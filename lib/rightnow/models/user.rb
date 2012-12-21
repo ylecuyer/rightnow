@@ -5,8 +5,10 @@ module Rightnow
   class User
     include Virtus
 
-    attribute :hash, String
-    attribute :uri, String
+    attribute :guid, String
+    attribute :hash, String, default: lambda { |u,v| u.api_uri.scan(/[0-9a-z]{10}\z/).first }
+    attribute :web_uri, String
+    attribute :api_uri, String
     attribute :login_id, String
     attribute :name, String
     attribute :avatar, String
@@ -23,5 +25,9 @@ module Rightnow
     attribute :comment_count, Integer
     attribute :comments_selected_as_best_answer_count, Integer
     attribute :reputation, Reputation
+
+    def uri= value
+      self.api_uri = value
+    end
   end
 end

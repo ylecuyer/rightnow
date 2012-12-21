@@ -43,7 +43,7 @@ describe Rightnow::Post do
     it "stores creator as user" do
       post.created_by.should be_instance_of(Rightnow::User)
       post.created_by.hash.should == "45394358f2"
-      post.created_by.uri.should == "http://communityname.com/api/users/45394358f2"
+      post.created_by.api_uri.should == "http://communityname.com/api/users/45394358f2"
       post.created_by.login_id.should == "45394358f2"
       post.created_by.name.should == "Elsa"
       post.created_by.avatar.should == "http://communityname.com/files/b6eec94a24/mickey_plays_accordion.gif"
@@ -52,7 +52,7 @@ describe Rightnow::Post do
     it "stores last editor as user" do
       post.last_edited_by.should be_instance_of(Rightnow::User)
       post.last_edited_by.hash.should == "45394358f2"
-      post.last_edited_by.uri.should == "http://communityname.com/api/users/45394358f2"
+      post.last_edited_by.api_uri.should == "http://communityname.com/api/users/45394358f2"
       post.last_edited_by.login_id.should == "45394358f2"
       post.last_edited_by.name.should == "Elsa"
       post.last_edited_by.avatar.should == "http://communityname.com/files/b6eec94a24/mickey_plays_accordion.gif"
