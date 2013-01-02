@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe Rightnow::User do
-  let(:user) { Rightnow::User.new(data) }
+describe Rightnow::Models::User do
+  let(:user) { Rightnow::Models::User.new(data) }
 
   context "from PostGet call" do
     let(:data) { fixture('post_get.json', :json).underscore['post']['created_by'] }

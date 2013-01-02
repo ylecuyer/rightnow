@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe Rightnow::Post do
-  let(:post) { Rightnow::Post.new(data) }
+describe Rightnow::Models::Post do
+  let(:post) { Rightnow::Models::Post.new(data) }
 
   context "from search result" do
     let(:data) { fixture('post.rb', :ruby).underscore }
@@ -41,7 +41,7 @@ describe Rightnow::Post do
     end
 
     it "stores creator as user" do
-      post.created_by.should be_instance_of(Rightnow::User)
+      post.created_by.should be_instance_of(Rightnow::Models::User)
       post.created_by.hash.should == "45394358f2"
       post.created_by.api_uri.should == "http://communityname.com/api/users/45394358f2"
       post.created_by.login_id.should == "45394358f2"
@@ -50,7 +50,7 @@ describe Rightnow::Post do
     end
 
     it "stores last editor as user" do
-      post.last_edited_by.should be_instance_of(Rightnow::User)
+      post.last_edited_by.should be_instance_of(Rightnow::Models::User)
       post.last_edited_by.hash.should == "45394358f2"
       post.last_edited_by.api_uri.should == "http://communityname.com/api/users/45394358f2"
       post.last_edited_by.login_id.should == "45394358f2"
@@ -61,13 +61,13 @@ describe Rightnow::Post do
     it "stores fields details" do
       post.fields.should have(2).items
       # Title
-      post.fields.first.should be_instance_of(Rightnow::Field)
+      post.fields.first.should be_instance_of(Rightnow::Models::Field)
       post.fields.first.id.should == 40695
       post.fields.first.value.should =~ /Decoder V4/
       post.fields.first.name.should == "Titel"
       post.fields.first.type.should == 1
       # Content
-      post.fields.last.should be_instance_of(Rightnow::Field)
+      post.fields.last.should be_instance_of(Rightnow::Models::Field)
       post.fields.last.id.should == 40696
       post.fields.last.value.should =~ /gevolge van de nieuwe/
       post.fields.last.name.should == "Content"

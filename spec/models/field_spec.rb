@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe Rightnow::Field do
-  let(:field) { Rightnow::Field.new(data.underscore) }
+describe Rightnow::Models::Field do
+  let(:field) { Rightnow::Models::Field.new(data.underscore) }
   let(:data) { { "id" => 40695, "postTypeField" => {"name" => "Titel", "type" => 1}, "value" => "Value"} }
 
   it "creates with correct values" do

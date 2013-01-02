@@ -21,14 +21,14 @@ module Rightnow
       end
     end
 
-    # Send a search query, returning an array of Rightnow::Post
+    # Send a search query, returning an array of Rightnow::Models::Post
     # results are limited to a few fields
     #
     # opts::
     #   A hash of options accepted by Rightnow's Search method
     #
     # returns::
-    #   An array of Rightnow::Post
+    #   An array of Rightnow::Models::Post
     #
     # example:
     #   +search :term => 'white', :sort => 'az', :limit => 50, :page => 1+
@@ -38,17 +38,17 @@ module Rightnow
       opts[:objects] ||= 'Posts'
       opts[:start] ||= (opts.delete(:page) - 1) * opts[:limit] + 1 if opts[:page]
       results = request 'Search', opts
-      results.map {|r| Rightnow::Post.new(r.underscore) }
+      results.map {|r| Rightnow::Models::Post.new(r.underscore) }
     end
 
     # Retrieve full details for one or more posts.
     # Run multiple queries in parallel.
     #
     # posts::
-    #   Either a single element or an array of Rightnow::Post or post hash
+    #   Either a single element or an array of Rightnow::Models::Post or post hash
     #
     # returns::
-    #   A single element or an array of Rightnow::Post
+    #   A single element or an array of Rightnow::Models::Post
     #   depending on the argument (single value or array)
     #
     # example::
@@ -58,17 +58,17 @@ module Rightnow
       responses = nil
       @conn.in_parallel do
         responses = [posts].flatten.map do |post|
-          hash = post.is_a?(Post) ? post.hash : post
+          hash = post.is_a?(Models::Post) ? post.hash : post
           @conn.get 'api/endpoint', signed_params('PostGet', 'postHash' => hash)
         end
       end
       result = responses.zip([posts].flatten).map do |res, post|
         data = parse(res).underscore['post']
-        if post.is_a? Post
+        if post.is_a? Models::Post
           post.attributes = data
           post
         elsif data.is_a? Hash
-          Rightnow::Post.new(data.merge(:hash => post))
+          Rightnow::Models::Post.new(data.merge(:hash => post))
         else
           nil
         end
@@ -79,7 +79,7 @@ module Rightnow
     # Retrieve comment list for a post.
     #
     # post::
-    #   An instance of Rightnow::Post or a post hash (String)
+    #   An instance of Rightnow::Models::Post or a post hash (String)
     #
     # returns::
     #   An array of Rightnow::Comment
@@ -88,10 +88,10 @@ module Rightnow
     #   +comment_list "fa8e6cc713"+
     #
     def comment_list post, opts = {}
-      hash = post.is_a?(Post) ? post.hash : post
+      hash = post.is_a?(Models::Post) ? post.hash : post
       results = request 'CommentList', opts.merge('postHash' => hash)
       raise Rightnow::Error.new("Missing `comments` key in CommentList response: #{results.inspect}") if not results['comments']
-      results.underscore['comments'].map { |r| Rightnow::Comment.new(r) }
+      results.underscore['comments'].map { |r| Rightnow::Models::Comment.new(r) }
     end
 
     def request action, opts = {}

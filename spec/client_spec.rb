@@ -30,7 +30,7 @@ describe Rightnow::Client do
       stub_request(:get, /.*/).to_return :body => fixture('search.json')
       response = client.search
       response.should have(5).items
-      response.first.should be_instance_of(Rightnow::Post)
+      response.first.should be_instance_of(Rightnow::Models::Post)
     end
   end
 
@@ -45,7 +45,7 @@ describe Rightnow::Client do
 
       it "returns correctly parsed response" do
         response = client.post_get "fa8e6cc713"
-        response.should be_instance_of(Rightnow::Post)
+        response.should be_instance_of(Rightnow::Models::Post)
         response.view_count.should == 795
         response.hash.should == "fa8e6cc713"
       end
@@ -53,18 +53,18 @@ describe Rightnow::Client do
       it "accepts multiple elements" do
         posts = client.post_get ["fa8e6cc713", "fa8e6cb714"]
         posts.should have(2).items
-        posts.first.should be_instance_of(Rightnow::Post)
+        posts.first.should be_instance_of(Rightnow::Models::Post)
       end
 
       it "accepts Rightnow::Post instances" do
-        post = Rightnow::Post.new(:hash => "fa8e6cc713")
+        post = Rightnow::Models::Post.new(:hash => "fa8e6cc713")
         res = client.post_get post
-        res.should be_instance_of(Rightnow::Post)
+        res.should be_instance_of(Rightnow::Models::Post)
         res.view_count.should == 795
       end
 
       it "merges input Rightnow::Post instance with results" do
-        post = Rightnow::Post.new(:hash => "fa8e6cc713")
+        post = Rightnow::Models::Post.new(:hash => "fa8e6cc713")
         res = client.post_get post
         res.view_count.should == 795
         res.hash.should == "fa8e6cc713"
@@ -93,7 +93,7 @@ describe Rightnow::Client do
       it "returns correctly parsed response" do
         response = client.comment_list "fa8e6cc713"
         response.should have(3).items
-        response.first.should be_instance_of(Rightnow::Comment)
+        response.first.should be_instance_of(Rightnow::Models::Comment)
       end
     end
   end

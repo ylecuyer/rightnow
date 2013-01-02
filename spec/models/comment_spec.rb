@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe Rightnow::Comment do
-  let(:comment) { Rightnow::Comment.new(data) }
+describe Rightnow::Models::Comment do
+  let(:comment) { Rightnow::Models::Comment.new(data) }
 
   context "from CommentList call" do
     let(:data) { fixture('comment_list.json', :json).underscore['comments'].first }
@@ -21,7 +21,7 @@ describe Rightnow::Comment do
     end
 
     it "stores creator as user" do
-      comment.created_by.should be_instance_of(Rightnow::User)
+      comment.created_by.should be_instance_of(Rightnow::Models::User)
       comment.created_by.guid.should == 35948
       comment.created_by.api_uri.should == "http://communityname.com/api/users/3e2ce69336"
       comment.created_by.name.should == "Francoise ."
@@ -30,7 +30,7 @@ describe Rightnow::Comment do
     end
 
     it "stores last editor as user" do
-      comment.last_edited_by.should be_instance_of(Rightnow::User)
+      comment.last_edited_by.should be_instance_of(Rightnow::Models::User)
       comment.last_edited_by.api_uri.should == "http://communityname.com/api/users/3e2ce69336"
       comment.last_edited_by.guid.should == 35948
       comment.last_edited_by.name.should == "Francoise ."
