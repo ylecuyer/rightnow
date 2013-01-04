@@ -18,7 +18,7 @@ module Rightnow
       attribute :type, Integer
       attribute :status, Integer
       attribute :guid, Integer
-      attribute :created, String
+      attribute :created, Integer
       attribute :last_login, String
       attribute :buddy_count, Integer
       attribute :group_count, Integer
@@ -27,6 +27,10 @@ module Rightnow
       attribute :comment_count, Integer
       attribute :comments_selected_as_best_answer_count, Integer
       attribute :reputation, Reputation
+
+      def created_at
+        Time.at(created)
+      end
 
       def uri= value
         self.api_uri = value

@@ -47,6 +47,7 @@ describe Rightnow::Models::User do
       user.email.should == "elsa.foster-cg8p1qi@yopmail.com"
       user.type.should == 6
       user.status.should == 1
+      user.created_at.should == Time.utc(2012, 2, 18, 9, 49, 15)
     end
 
     it "should have reputation fields" do
