@@ -22,7 +22,7 @@ describe Rightnow::Client do
 
   describe '#search' do
     it "compute correct request" do
-      stub_request(:get, "http://something/api/endpoint?Action=Search&ApiKey=API&PermissionedAs=hl_api&Signature=3LOgM56NN477w7BEVbP5kWb3gLs=&SignatureVersion=2&format=json&limit=20&objects=Posts&sort=az&start=21&term=white&version=2010-05-15").to_return :body => '[]'
+      stub_request(:get, "http://something/api/endpoint?Action=Search&ApiKey=API&PermissionedAs=hl.api@hivelive.com&Signature=nwmG/dgt9MLvq1CXWTtSLqcaaaY=&SignatureVersion=2&format=json&limit=20&objects=Posts&sort=az&start=21&term=white&version=2010-05-15").to_return :body => '[]'
       client.search(:term => 'white', :sort => 'az', :page => 2).should == []
     end
 
@@ -36,7 +36,7 @@ describe Rightnow::Client do
 
   describe '#post_get' do
     it "compute correct request" do
-      stub_request(:get, "http://something/api/endpoint?Action=PostGet&ApiKey=API&PermissionedAs=hl_api&Signature=9KMnRws3GxJVuIgU8xTaeq5Y2C0=&SignatureVersion=2&format=json&postHash=fa8e6cc713&version=2010-05-15").to_return :body => '{}'
+      stub_request(:get, "http://something/api/endpoint?Action=PostGet&ApiKey=API&PermissionedAs=hl.api@hivelive.com&Signature=bFdCqLpLcCHT3jQEz7nndKrVVk8=&SignatureVersion=2&format=json&postHash=fa8e6cc713&version=2010-05-15").to_return :body => '{}'
       client.post_get("fa8e6cc713").should be_nil
     end
 
@@ -100,7 +100,7 @@ describe Rightnow::Client do
 
   describe "#request" do
     it "compute correct request" do
-      stub_request(:get, "http://something/api/endpoint?Action=UserList&ApiKey=API&PermissionedAs=hl_api&Signature=XOyBquzX6vM8b5DO6/By5saSKho=&SignatureVersion=2&format=json&version=2010-05-15").to_return :body => '{}'
+      stub_request(:get, "http://something/api/endpoint?Action=UserList&ApiKey=API&PermissionedAs=hl.api@hivelive.com&Signature=wLTpdU5EEyYBlDg%2BMz5AGEAPs98=&SignatureVersion=2&format=json&version=2010-05-15").to_return :body => '{}'
       client.request('UserList').should == {}
     end
 
@@ -139,8 +139,8 @@ describe Rightnow::Client do
 
     it { should include('Action' => 'Something', 'ApiKey' => 'API') }
     it { should include('version' => '2010-05-15', 'SignatureVersion' => '2') }
-    it { should include('PermissionedAs' => 'hl_api') }
-    it { should include('Signature' => 'L2GWOnez54VB3ywBB2Om332z9FE=') }
+    it { should include('PermissionedAs' => 'hl.api@hivelive.com') }
+    it { should include('Signature' => 'vIONtWGXvdAG/McOTM0KuFD+O2g=') }
     it { should include('format' => 'json') }
     its(:size) { should == 7 }
 
@@ -155,7 +155,7 @@ describe Rightnow::Client do
     context "with custom values" do
       subject { client.send :signed_params, "Something", 'term' => 'white' }
 
-      it { should include('Signature' => 'L2GWOnez54VB3ywBB2Om332z9FE=') }
+      it { should include('Signature' => 'vIONtWGXvdAG/McOTM0KuFD+O2g=') }
       it { should include('term' => 'white') }
     end
   end

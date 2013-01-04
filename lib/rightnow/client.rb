@@ -95,19 +95,20 @@ module Rightnow
     end
 
     def request action, opts = {}
-      parse @conn.get('api/endpoint', signed_params(action, opts))
+      debug = opts.delete(:debug)
+      response = @conn.get('api/endpoint', signed_params(action, opts))
+      puts response.body if debug
+      parse response
     end
 
   protected
 
     def parse response
       body = JSON.parse(response.body || '')
-      if response.status != 200
-        if body['error'].is_a?(Hash)
-          raise Rightnow::Error.new(body['error']['message'], body['error']['code'])
-        else
-          raise Rightnow::Error.new("API returned #{response.status} without explanation: #{response.body}")
-        end
+      if body.is_a?(Hash) and body.size == 1 and body['error'].is_a?(Hash)
+        raise Rightnow::Error.new(body['error']['message'], body['error']['code'])
+      elsif response.status != 200
+        raise Rightnow::Error.new("API returned #{response.status} without explanation: #{response.body}")
       end
       body
     rescue JSON::ParserError
@@ -119,7 +120,7 @@ module Rightnow
       params = {
         'Action' => action,
         'ApiKey' => api_key,
-        'PermissionedAs' => opts.delete(:as) || 'hl_api',
+        'PermissionedAs' => opts.delete(:as) || 'hl.api@hivelive.com',
         'SignatureVersion' => '2',
         'version' => version
       }

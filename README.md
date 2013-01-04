@@ -29,6 +29,26 @@ client = Rightnow::Client.new "http://community.company.com", :api_key => "YOUR_
 Then you can query the API with:
 
 ```ruby
+res = client.search term: 'white', limit: 50
+```
+
+Get more details for one or more post:
+
+```ruby
+client.post_get res.first
+client.post_get ["fa8e6cc713", "fa8e6cb714"]
+```
+
+Fetch all comments for a post:
+
+```ruby
+client.comment_list res.first
+client.comment_list "fa8e6cc713"
+```
+
+Or any other generic request:
+
+```ruby
 client.request 'UserList', :as => 'admin@domain.com'
 ```
 
