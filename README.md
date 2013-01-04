@@ -46,6 +46,13 @@ client.comment_list res.first
 client.comment_list "fa8e6cc713"
 ```
 
+Get more details for one or more users:
+
+```ruby
+client.user_get res.first.created_by.hash
+client.user_get ["fa8e6cc713", "fa8e6cb714"]
+```
+
 Or any other generic request:
 
 ```ruby

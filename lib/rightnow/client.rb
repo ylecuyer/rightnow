@@ -76,6 +76,41 @@ module Rightnow
       posts.is_a?(Array) ? result : result.first
     end
 
+    # Retrieve full details for one or more users.
+    # Run multiple queries in parallel.
+    #
+    # users::
+    #   Either a single element or an array of Rightnow::Models::User or user hash
+    #
+    # returns::
+    #   A single element or an array of Rightnow::Models::User
+    #   depending on the argument (single value or array)
+    #
+    # example::
+    #   +user_get ["fa8e6cc713", "fa8e6cb714"]+
+    #
+    def user_get users
+      responses = nil
+      @conn.in_parallel do
+        responses = [users].flatten.map do |user|
+          hash = user.is_a?(Models::User) ? user.hash : user
+          @conn.get 'api/endpoint', signed_params('UserGet', 'UserHash' => hash)
+        end
+      end
+      result = responses.zip([users].flatten).map do |res, user|
+        data = parse(res).underscore['user']
+        if user.is_a? Models::User
+          user.attributes = data
+          user
+        elsif data.is_a? Hash
+          Rightnow::Models::User.new(data.merge(:hash => user))
+        else
+          nil
+          end
+      end
+      users.is_a?(Array) ? result : result.first
+    end
+
     # Retrieve comment list for a post.
     #
     # post::

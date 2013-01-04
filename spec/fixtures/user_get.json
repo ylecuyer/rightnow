@@ -1,0 +1,107 @@
+
+{ "user": {
+    "hash":"45394358f2",
+    "uri":"http://communityname.com/api/users/45394358f2",
+    "loginId":"45394358f2",
+    "userId":19982,
+    "name":"Elsa",
+    "avatar":"http://communityname.com/files/b6eec94a24/mickey_plays_accordion.gif",
+    "email":"elsa.foster-cg8p1qi@yopmail.com",
+    "type":"6",
+    "status":"1",
+    "guid":"21709",
+    "created":"1329558555",
+    "lastLogin":"1357281916",
+    "buddyCount":"1",
+    "groupCount":"0",
+    "hiveCount":"0",
+    "postCount":"53",
+    "commentCount":"5929",
+    "commentsSelectedAsBestAnswerCount":"2",
+    "reputation": {
+      "level":"Intense User",
+      "score":"122500",
+      "avatar":"/files/716841fe8c/icon_mem_intense.png"
+    },
+    "groupsSummary": {
+      "total":"0",
+      "owned":"0",
+      "admin":"0",
+      "member":"0",
+      "moderator":"0",
+      "builder":"0",
+      "listed":"0"
+    }
+  },
+  "postsSummary": {
+    "total":"53",
+    "listed":"3",
+    "posts": [
+      {"webUrl":"http://communityname.com/posts/3cd203b776",
+       "apiUrl":"http://communityname.com/api/groups/3cd203b776",
+       "title":"Nieuws & persberichten"},
+      {"webUrl":"http://communityname.com/posts/41aaafa142",
+       "apiUrl":"http://communityname.com/api/groups/41aaafa142",
+       "title":"Teletekst"},
+      {"webUrl":"http://communityname.com/posts/81d3c4ebd8",
+       "apiUrl":"http://communityname.com/api/groups/81d3c4ebd8",
+       "title":"Decoder V4: firmware update Charles2_2.7.5.62  (04\/12\/12)"}
+    ]
+  },
+  "commentsSummary": {
+    "total":"5929",
+    "listed":"3",
+    "comments":[
+      {"webUrl":"http://communityname.com/posts/afc39b51a9#95775",
+       "apiUrl":"http://communityname.com/api/comments/95775",
+       "value":"<p>\r\n\tJe kan inloggen als &quot;admin&quot; =&gt; http:\/\/192.168.1.1\/index.cgi?user_name=admin&amp;password=LKXXXXXDPXXXXXX<\/p>\r\n<p>\r\n\ten als &quot;user&quot; =&gt; http:\/\/192.168.1.1\/index.cgi?user_name=user&amp;password=LKXXXXXDPXXXXX<\/p>\r\n<p>\r\n\t<br \/>\r\n\tbij inloggen op http:\/\/192.168.1.1 wordt SerieNr. gevraagd<\/p>\r\n<p>\r\n\tLKXXXXXDPXXXXXX &nbsp;bevindt zich op de sticker van de BBOX2<\/p>\r\n<p>\r\n\tje kan ook een shortcut op je bureaublad maken :<\/p>\r\n<p>\r\n\t- create a new schortcut to desktop by right clicking and put one of this links above into the input field<br \/>\r\n\t&nbsp; click next and put in the input field for example :<br \/>\r\n\t&quot; BBOX2 Admin Login &quot;<br \/>\r\n\tand click finish<\/p>\r\n<p>\r\n\tDit vind je allemaal op ricy&#39;s blog <a href=\"http:\/\/bgctv.skynetblogs.be\/#bbox2firmwareversies\">hier<\/a>&nbsp;(en nog veel meer)<\/p>\r\n<p>\r\n\tgrtjs, Elsa<br \/>\r\n\t&nbsp;<\/p>\r\n<p>\r\n\t&nbsp;<\/p>\r\n<p>\r\n\t&nbsp;<\/p>"
+      },
+      {"webUrl":"http://communityname.com/posts/7c59ca3065#95771",
+       "apiUrl":"http://communityname.com/api/comments/95771",
+       "value":"<p>\r\n\tAls je wilt kontroleren of alles goed aangesloten is kijk dan eens op ricy&#39;s blog <a href=\"http:\/\/bgctv.skynetblogs.be\/#vdsl2splitterbeschrijving\">hier<\/a><\/p>\r\n<p>\r\n\t( daar vind je ook de uitleg over&nbsp;<a href=\"http:\/\/bgctv.skynetblogs.be\/#vdsl2vectoring\">vectoring<\/a> maar dit heeft niks met je probleem te maken)<\/p>\r\n<p>\r\n\tdaar staat oa ook de link <a href=\"http:\/\/communityname.com\/files\/05a64d8aef\/InstallguideVDSL2_NL.pdf\"><font color=\"#0066cc\">Installatiegids VDSL2<\/font><\/a><\/p>\r\n<p>\r\n\tgroetjes, Elsa&nbsp;&nbsp;&nbsp;<\/p>"
+      },
+      {"webUrl":"http://communityname.com/posts/81d3c4ebd8#95762",
+       "apiUrl":"http://communityname.com/api/comments/95762",
+       "value":"<p>\r\n\tDat is nog iets anders want dit heeft natuurlijk niks met HDMI charles bug te zien want dat even wegzappen en terug in orde komen is nog een andere bug in Charles en het is nog straffer het problmeem HDMI Charles bug&nbsp;valt niet bij alle LCD TV types voor, zo bijvoorbeeld heb ik het nog nooit voorgehad zelf niet van in de eerste release van Charles1 tot de laatste van Charles1 ook niet want je kan bij het bekende fenomeen van de charles bug ivm HDMI dit niet in orde krijgen door te zappen.<\/p>\r\n<p>\r\n\tHet is gewoon wachten op een nieuwe release van Charles ! en dan is het nog afwwachten of alle problemen zulle verdwenen zijn.<\/p>\r\n<p>\r\n\tgrtjs, Elsa<\/p>"
+      }
+    ]
+  },
+  "profile": {
+    "lastEdited":"1348411371",
+    "lastEditedBy": {
+      "uri":"http://communityname.com/api/users/45394358f2",
+      "hash":"45394358f2"
+    },
+    "fields": [{
+      "id":8048,
+      "profileTypeField":{
+        "name":"Voornaam",
+        "type":1},
+      "value":"Elsa"},{
+      "id":11716,
+      "profileTypeField":{
+        "name":"Naam",
+        "type":1},
+      "value":"Foster"},{
+      "id":11717,
+      "profileTypeField":{
+        "name":"Taal",
+        "type":300},
+      "value":"Dutch Nederlandish Holland"},{
+      "id":11719,
+      "profileTypeField":{
+        "name":"Geboortedatum",
+        "type":400},
+      "value":"25\/12\/1975"},{
+      "id":11718,
+      "profileTypeField":{
+        "name":"Geweest\/Provincie",
+        "type":300},
+      "value":"Vlaams-Brabant"},{
+      "id":11720,
+      "profileTypeField":{
+        "name":"Postcode (priv\u00e9)",
+        "type":1},
+      "value":"1850"}
+    ]
+}}

@@ -11,6 +11,7 @@ module Rightnow
       attribute :web_uri, String
       attribute :api_uri, String
       attribute :login_id, String
+      attribute :user_id, Integer
       attribute :name, String
       attribute :avatar, String
       attribute :email, String
