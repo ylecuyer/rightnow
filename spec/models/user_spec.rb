@@ -48,6 +48,7 @@ describe Rightnow::Models::User do
       user.type.should == 6
       user.status.should == 1
       user.created_at.should == Time.utc(2012, 2, 18, 9, 49, 15)
+      user.last_login_at.should == Time.utc(2013, 1, 4, 6, 45, 16)
     end
 
     it "should have reputation fields" do

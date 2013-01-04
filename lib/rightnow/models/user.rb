@@ -19,7 +19,7 @@ module Rightnow
       attribute :status, Integer
       attribute :guid, Integer
       attribute :created, Integer
-      attribute :last_login, String
+      attribute :last_login, Integer
       attribute :buddy_count, Integer
       attribute :group_count, Integer
       attribute :hive_count, Integer
@@ -30,6 +30,10 @@ module Rightnow
 
       def created_at
         Time.at(created)
+      end
+
+      def last_login_at
+        Time.at(last_login)
       end
 
       def uri= value
