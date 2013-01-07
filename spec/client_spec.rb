@@ -112,6 +112,13 @@ describe Rightnow::Client do
     end
   end
 
+  describe '#comment_delete' do
+    it "compute correct request" do
+      stub_request(:get, "http://something/api/endpoint?Action=CommentDelete&ApiKey=API&PermissionedAs=hl.api@hivelive.com&Signature=BdDIajOi/eZprayZ8X8eEsH1yb4=&SignatureVersion=2&commentId=777&format=json&version=2010-05-15").to_return body: '{"comment": {"id": 777}}'
+      client.comment_delete(777).should == {'comment' => {'id' => 777}}
+    end
+  end
+
   describe "#request" do
     it "compute correct request" do
       stub_request(:get, "http://something/api/endpoint?Action=UserList&ApiKey=API&PermissionedAs=hl.api@hivelive.com&Signature=wLTpdU5EEyYBlDg%2BMz5AGEAPs98=&SignatureVersion=2&format=json&version=2010-05-15").to_return :body => '{}'

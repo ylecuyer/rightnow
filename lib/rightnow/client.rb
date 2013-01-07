@@ -152,6 +152,18 @@ module Rightnow
       Rightnow::Models::Comment.new results['comment'].underscore
     end
 
+    # Delete a comment.
+    #
+    # comment::
+    #   The id of the comment (Integer)
+    #
+    # example::
+    #   +comment_delete 777
+    #
+    def comment_delete comment, opts = {}
+      request 'CommentDelete', opts.merge('commentId' => comment)
+    end
+
     def request action, opts = {}
       debug = opts.delete(:debug)
       response = @conn.get('api/endpoint', signed_params(action, opts))
