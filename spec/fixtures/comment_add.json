@@ -1,0 +1,21 @@
+{"comment":{
+  "id":96082,
+  "uri":"http://community.belgacom.be/api/comments/96082",
+  "created":1357558716, "createdBy":{
+    "hash":"50ed7819d1",
+    "uri":"http://community.belgacom.be/api/users/50ed7819d1",
+    "loginId":"50ed7819d1",
+    "name":"Adrien .",
+    "avatar":"http:\/\/community.belgacom.be\/common\/images\/avatars\/user\/default.jpg" },
+  "lastEdited":1357558716,    "lastEditedBy":{
+    "hash":"50ed7819d1",
+    "uri":"http://community.belgacom.be/api/users/50ed7819d1",
+    "loginId":"50ed7819d1",
+    "name":"Adrien .",
+      "avatar":"http:\/\/community.belgacom.be\/common\/images\/avatars\/user\/default.jpg" },
+  "status":1,
+    "hiveHash":"e93ba3507b",
+    "hiveName":"Autres",
+    "postHash":"e41899881f",
+    "postName":"Site - lenteur",
+    "value":"Oui, et ca dure..."}}

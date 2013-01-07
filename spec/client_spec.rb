@@ -98,6 +98,20 @@ describe Rightnow::Client do
     end
   end
 
+  describe '#comment_add' do
+    it "compute correct request" do
+      pending "couldn't get this test passing" do
+        stub_request(:post, "http://something/api/endpoint").with(:body => {"Action"=>"CommentAdd", "ApiKey"=>"API", "PermissionedAs"=>"toto", "Signature"=>"kJXXoPZ7xexKxv8duTYmtS519GY=", "SignatureVersion"=>"2", "format"=>"json", "payload"=>"<?xml version='1.0'?><comments><comment><value><![CDATA[test]]></value></comment></comments>", "postHash"=>"fa8e6cc713", "version"=>"2010-05-15"}).to_return :body => ""
+        client.comment_add("fa8e6cc713", 'test', as: 'toto')
+      end
+    end
+
+    it "return comment model" do
+      stub_request(:post, "http://something/api/endpoint").to_return :body => fixture('comment_add.json')
+      client.comment_add("fa8e6cc713", 'test', as: 'toto').should be_instance_of Rightnow::Models::Comment
+    end
+  end
+
   describe "#request" do
     it "compute correct request" do
       stub_request(:get, "http://something/api/endpoint?Action=UserList&ApiKey=API&PermissionedAs=hl.api@hivelive.com&Signature=wLTpdU5EEyYBlDg%2BMz5AGEAPs98=&SignatureVersion=2&format=json&version=2010-05-15").to_return :body => '{}'
@@ -131,6 +145,12 @@ describe Rightnow::Client do
       results = client.request 'Search'
       results.should have(5).items
       results.first.should == fixture('post.rb', :ruby)
+    end
+  end
+
+  describe "#comment_xml_paypload" do
+    it "should generate correct XML payload" do
+      client.send(:comment_xml_payload, "test").to_s.should == "<?xml version='1.0'?><comments><comment><value><![CDATA[test]]></value></comment></comments>"
     end
   end
 

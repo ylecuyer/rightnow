@@ -4,6 +4,7 @@ require 'faraday'
 require 'typhoeus'
 require 'typhoeus/adapters/faraday'
 require 'json'
+require 'rexml/document'
 
 module Rightnow
   class Client
@@ -129,6 +130,28 @@ module Rightnow
       results.underscore['comments'].map { |r| Rightnow::Models::Comment.new(r) }
     end
 
+    # Add a comment to a post.
+    #
+    # post::
+    #   An instance of Rightnow::Models::Post or a post hash (String)
+    #
+    # comment::
+    #   The body of the comment (String)
+    #
+    # returns::
+    #   The instance of the newly created Rightnow::Comment
+    #
+    # example::
+    #   +comment_add "fa8e6cc713", "+1", :as => 'someone@domain.com'+
+    #
+    def comment_add post, comment, opts = {}
+      hash = post.is_a?(Models::Post) ? post.hash : post
+      response = @conn.post('api/endpoint', signed_params('CommentAdd', opts.merge('postHash' => hash, 'payload' => comment_xml_payload(comment).to_s)))
+      results = parse response
+      raise Rightnow::Error.new("Missing `comment` key in CommentAdd response: #{results.inspect}") if not results['comment']
+      Rightnow::Models::Comment.new results['comment'].underscore
+    end
+
     def request action, opts = {}
       debug = opts.delete(:debug)
       response = @conn.get('api/endpoint', signed_params(action, opts))
@@ -148,6 +171,12 @@ module Rightnow
       body
     rescue JSON::ParserError
       raise Rightnow::Error.new("Bad JSON received: #{response.body.inspect}")
+    end
+
+    def comment_xml_payload comment
+      doc = REXML::Document.new '<?xml version="1.0"?><comments><comment><value></value></comment></comments>'
+      doc.elements['//value'].add REXML::CData.new comment
+      doc
     end
 
     def signed_params action, opts = {}
