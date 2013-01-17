@@ -112,6 +112,14 @@ describe Rightnow::Client do
     end
   end
 
+  describe '#comment_update' do
+
+    it "return comment model" do
+      stub_request(:post, "http://something/api/endpoint").to_return :body => fixture('comment_add.json')
+      client.comment_update(777, 'test', as: 'toto').should be_instance_of Rightnow::Models::Comment
+    end
+  end
+
   describe '#comment_delete' do
     it "compute correct request" do
       stub_request(:get, "http://something/api/endpoint?Action=CommentDelete&ApiKey=API&PermissionedAs=hl.api@hivelive.com&Signature=BdDIajOi/eZprayZ8X8eEsH1yb4=&SignatureVersion=2&commentId=777&format=json&version=2010-05-15").to_return body: '{"comment": {"id": 777}}'

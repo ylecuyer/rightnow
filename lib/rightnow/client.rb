@@ -17,7 +17,7 @@ module Rightnow
       @version = opts[:version] || '2010-05-15'
 
       @conn = Faraday.new(:url => host) do |faraday|
-        #faraday.response :logger
+        # faraday.response :logger
         faraday.adapter  :typhoeus
       end
     end
@@ -135,7 +135,7 @@ module Rightnow
     # post::
     #   An instance of Rightnow::Models::Post or a post hash (String)
     #
-    # comment::
+    # body::
     #   The body of the comment (String)
     #
     # returns::
@@ -144,11 +144,31 @@ module Rightnow
     # example::
     #   +comment_add "fa8e6cc713", "+1", :as => 'someone@domain.com'+
     #
-    def comment_add post, comment, opts = {}
+    def comment_add post, body, opts = {}
       hash = post.is_a?(Models::Post) ? post.hash : post
-      response = @conn.post('api/endpoint', signed_params('CommentAdd', opts.merge('postHash' => hash, 'payload' => comment_xml_payload(comment).to_s)))
-      results = parse response
+      results = request 'CommentAdd', opts.merge('postHash' => hash, 'payload' => comment_xml_payload(body).to_s, :verb => :post)
       raise Rightnow::Error.new("Missing `comment` key in CommentAdd response: #{results.inspect}") if not results['comment']
+      Rightnow::Models::Comment.new results['comment'].underscore
+    end
+
+    # Edit a comment.
+    #
+    # comment::
+    #   An instance of Rightnow::Models::Comment or a comment id (Integer)
+    #
+    # comment::
+    #   The updated body of the comment (String)
+    #
+    # returns::
+    #   The instance of the updated Rightnow::Comment
+    #
+    # example::
+    #   +comment_update 94224, "+1", :as => 'someone@domain.com'+
+    #
+    def comment_update comment, body, opts = {}
+      id = comment.is_a?(Models::Comment) ? comment.id : comment
+      results = request 'CommentUpdate', opts.merge('commentId' => id, 'payload' => comment_xml_payload(body, :for => :update).to_s, :verb => :post)
+      raise Rightnow::Error.new("Missing `comment` key in CommentUpdate response: #{results.inspect}") if not results['comment']
       Rightnow::Models::Comment.new results['comment'].underscore
     end
 
@@ -158,7 +178,7 @@ module Rightnow
     #   The id of the comment (Integer)
     #
     # example::
-    #   +comment_delete 777
+    #   +comment_delete 777+
     #
     def comment_delete comment, opts = {}
       request 'CommentDelete', opts.merge('commentId' => comment)
@@ -166,7 +186,8 @@ module Rightnow
 
     def request action, opts = {}
       debug = opts.delete(:debug)
-      response = @conn.get('api/endpoint', signed_params(action, opts))
+      verb = opts.delete(:verb) || :get
+      response = @conn.send(verb, 'api/endpoint', signed_params(action, opts))
       puts response.body if debug
       parse response
     end
@@ -185,8 +206,11 @@ module Rightnow
       raise Rightnow::Error.new("Bad JSON received: #{response.body.inspect}")
     end
 
-    def comment_xml_payload comment
-      doc = REXML::Document.new '<?xml version="1.0"?><comments><comment><value></value></comment></comments>'
+    def comment_xml_payload comment, opts = {}
+      xml = '<?xml version="1.0"?><comments><comment><value></value></comment></comments>'
+      # CommentUpdate action uses a slightly different markup -_-
+      xml.gsub!(/<\/?comments>/, '') if opts[:for] == :update
+      doc = REXML::Document.new xml
       doc.elements['//value'].add REXML::CData.new comment
       doc
     end

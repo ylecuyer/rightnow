@@ -46,6 +46,26 @@ client.comment_list res.first
 client.comment_list "fa8e6cc713"
 ```
 
+Add a comment:
+
+```ruby
+client.comment_add res.first, "Hello", as: 'user@email.com'
+client.comment_add "fa8e6cc713", "Hello", as: 'user@email.com'
+```
+
+Edit a comment:
+
+```ruby
+client.comment_update res.first, "Hello 2", as: 'user@email.com'
+client.comment_update "fa8e6cc713", "Hello 2", as: 'user@email.com'
+```
+
+Delete a comment:
+
+```ruby
+client.comment_delete 777, as: 'author@email.com'
+```
+
 Get more details for one or more users:
 
 ```ruby
