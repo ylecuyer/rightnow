@@ -8,7 +8,7 @@ Ruby wrapper for the Oracle Rightnow Social API v2
 
 Add this line to your application's Gemfile:
 
-    gem 'rightnow'
+    gem 'rightnow-client'
 
 And then execute:
 
@@ -16,7 +16,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install rightnow
+    $ gem install rightnow-client
 
 ## Usage
 

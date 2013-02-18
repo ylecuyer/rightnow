@@ -4,11 +4,11 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'rightnow/version'
 
 Gem::Specification.new do |gem|
-  gem.name          = "rightnow"
+  gem.name          = "rightnow-client"
   gem.version       = Rightnow::VERSION
   gem.authors       = ["Adrien Jarthon"]
   gem.email         = ["adrien.jarthon@dimelo.com"]
-  gem.description   = %q{Ruby wrapper for the Rightnow API}
+  gem.description   = %q{Rightnow API Ruby wrapper}
   gem.summary       = %q{Ruby wrapper for the Oracle Rightnow Social API v2}
   gem.homepage      = "https://github.com/dimelo/rightnow"
 
