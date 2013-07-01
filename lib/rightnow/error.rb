@@ -9,4 +9,6 @@ module Rightnow
       super + (@code.nil? ? '' : " (#{@code})")
     end
   end
+
+  class JsonParseError < StandardError; end
 end

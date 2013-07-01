@@ -151,7 +151,7 @@ describe Rightnow::Client do
       stub_request(:get, /.*/).to_return(:status => 200, :body => 'bad')
       expect {
         client.request 'UserList'
-      }.to raise_error(Rightnow::Error, 'Bad JSON received: "bad"')
+      }.to raise_error(Rightnow::JsonParseError, 'bad')
     end
 
     it "parse JSON response correctly" do

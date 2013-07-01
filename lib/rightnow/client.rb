@@ -203,7 +203,7 @@ module Rightnow
       end
       body
     rescue JSON::ParserError
-      raise Rightnow::Error.new("Bad JSON received: #{response.body.inspect}")
+      raise Rightnow::JsonParseError.new(response.body)
     end
 
     def comment_xml_payload comment, opts = {}
