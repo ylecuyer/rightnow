@@ -10,5 +10,5 @@ module Rightnow
     end
   end
 
-  class JsonParseError < StandardError; end
+  class JsonParseError < Error; end
 end
