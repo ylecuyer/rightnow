@@ -4,7 +4,7 @@ require 'rightnow/models/reputation'
 module Rightnow
   module Models
     class User
-      include Virtus
+      include Virtus.model
 
       attribute :guid, String
       attribute :hash, String, default: lambda { |u,v| u.api_uri.scan(/[0-9a-z]{10}\z/).first }

@@ -8,4 +8,5 @@ require 'rightnow/models/post'
 require 'rightnow/models/comment'
 
 require 'rightnow/error'
+require 'rightnow/json_parser_error'
 require 'rightnow/client'

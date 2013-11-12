@@ -4,7 +4,7 @@ require 'rightnow/models/user'
 module Rightnow
   module Models
     class Comment
-      include Virtus
+      include Virtus.model
 
       attribute :id, Integer
       attribute :parent_id, Integer

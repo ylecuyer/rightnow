@@ -3,7 +3,7 @@ require 'virtus'
 module Rightnow
   module Models
     class Reputation
-      include Virtus
+      include Virtus.model
 
       attribute :level, String
       attribute :score, Integer

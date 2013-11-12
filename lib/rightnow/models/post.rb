@@ -5,7 +5,7 @@ require 'rightnow/models/field'
 module Rightnow
   module Models
     class Post
-      include Virtus
+      include Virtus.model
 
       # UserGet attributes
       attribute :uri, String
@@ -38,6 +38,7 @@ module Rightnow
       attribute :preview, String
 
       def post_type_id= value
+        self.post_type ||= {}
         self.post_type['id'] = value
       end
 

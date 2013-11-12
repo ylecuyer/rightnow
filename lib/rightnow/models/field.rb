@@ -3,7 +3,7 @@ require 'virtus'
 module Rightnow
   module Models
     class Field
-      include Virtus
+      include Virtus.model
 
       attribute :id, Integer
       attribute :value, String
