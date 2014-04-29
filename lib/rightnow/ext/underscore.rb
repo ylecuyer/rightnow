@@ -14,3 +14,13 @@ class Hash
     convert_hash_keys(self)
   end
 end
+
+# backport
+require 'active_support'
+class String
+  # http://apidock.com/rails/String/underscore
+  # File activesupport/lib/active_support/core_ext/string/inflections.rb, line 118
+  def underscore
+    ActiveSupport::Inflector.underscore(self)
+  end
+end
