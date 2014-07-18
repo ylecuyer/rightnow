@@ -20,13 +20,15 @@ Or install it yourself as:
 
 ## Usage
 
-Instanciate a new client with your community url and API keys:
+Instanciate a new client with your community url, API keys and API default user:
 
 ```ruby
-client = Rightnow::Client.new "http://community.company.com", :api_key => "YOUR_PUBLIC_KEY", :secret_key => "YOUR_PRIVATE_KEY"
+client = Rightnow::Client.new "http://community.company.com", :api_key => "YOUR_PUBLIC_KEY", :secret_key => "YOUR_PRIVATE_KEY", :user => "api@dimelo.com"
 ```
 
-Then you can query the API with:
+The user specified here is a user of the community (usually a superadmin) which must have the permissions for all the actions you want to do with the client.
+
+Then you can query the search API with:
 
 ```ruby
 res = client.search term: 'white', limit: 50
@@ -77,6 +79,14 @@ Or any other generic request:
 
 ```ruby
 client.request 'UserList', :as => 'admin@domain.com'
+```
+
+## Debug
+
+Instanciate the client with a `:debug => true` option to get debug info:
+
+```ruby
+client = Rightnow::Client.new "http://community.company.com", ..., :debug => true
 ```
 
 ## Contributing

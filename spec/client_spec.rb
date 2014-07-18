@@ -10,13 +10,15 @@ describe Rightnow::Client do
       client.api_key.should == nil
       client.secret_key.should == nil
       client.version.should == '2010-05-15'
+      client.user.should == 'hl.api@hivelive.com'
     end
 
     it "accepts options" do
-      client = Rightnow::Client.new "host", :api_key => "APIKEY", :secret_key => "SECRETKEY", :version => '2042-13-13'
+      client = Rightnow::Client.new "host", :api_key => "APIKEY", :secret_key => "SECRETKEY", :version => '2042-13-13', :user => 'api@domain.com'
       client.api_key.should == "APIKEY"
       client.secret_key.should == "SECRETKEY"
       client.version.should == '2042-13-13'
+      client.user.should == 'api@domain.com'
     end
   end
 
@@ -26,10 +28,15 @@ describe Rightnow::Client do
       client.search(:term => 'white', :sort => 'az', :page => 2).should == []
     end
 
+    it "accepts `as` option" do
+      stub_request(:get, "http://something/api/endpoint?Action=Search&ApiKey=API&PermissionedAs=api@domain.com&Signature=MmHBXKKsEfJJPX8EW%2B8ZqMnGEGc=&SignatureVersion=2&format=json&limit=20&objects=Posts&sort=az&start=21&term=white&version=2010-05-15").to_return :body => '[]'
+      client.search(:term => 'white', :sort => 'az', :page => 2, :as => 'api@domain.com').should == []
+    end
+
     it "returns correctly parsed response" do
       stub_request(:get, /.*/).to_return :body => fixture('search.json')
       response = client.search
-      response.should have(5).items
+      response.size.should == 5
       response.first.should be_instance_of(Rightnow::Models::Post)
     end
   end
@@ -52,7 +59,7 @@ describe Rightnow::Client do
 
       it "accepts multiple elements" do
         posts = client.post_get ["fa8e6cc713", "fa8e6cb714"]
-        posts.should have(2).items
+        posts.size.should == 2
         posts.first.should be_instance_of(Rightnow::Models::Post)
       end
 
@@ -92,7 +99,7 @@ describe Rightnow::Client do
 
       it "returns correctly parsed response" do
         response = client.comment_list "fa8e6cc713"
-        response.should have(3).items
+        response.size.should == 3
         response.first.should be_instance_of(Rightnow::Models::Comment)
       end
     end
@@ -100,10 +107,8 @@ describe Rightnow::Client do
 
   describe '#comment_add' do
     it "compute correct request" do
-      pending "couldn't get this test passing" do
-        stub_request(:post, "http://something/api/endpoint").with(:body => {"Action"=>"CommentAdd", "ApiKey"=>"API", "PermissionedAs"=>"toto", "Signature"=>"kJXXoPZ7xexKxv8duTYmtS519GY=", "SignatureVersion"=>"2", "format"=>"json", "payload"=>"<?xml version='1.0'?><comments><comment><value><![CDATA[test]]></value></comment></comments>", "postHash"=>"fa8e6cc713", "version"=>"2010-05-15"}).to_return :body => ""
-        client.comment_add("fa8e6cc713", 'test', as: 'toto')
-      end
+      stub_request(:post, "http://something/api/endpoint").with(:body => {"Action"=>"CommentAdd", "ApiKey"=>"API", "PermissionedAs"=>"toto", "Signature"=>"kJXXoPZ7xexKxv8duTYmtS519GY=", "SignatureVersion"=>"2", "format"=>"json", "payload"=>"<?xml version='1.0'?><comments><comment><value><![CDATA[test]]></value></comment></comments>", "postHash"=>"fa8e6cc713", "version"=>"2010-05-15"}).to_return :body => '{"comment": {}}'
+      client.comment_add("fa8e6cc713", 'test', as: 'toto')
     end
 
     it "return comment model" do
@@ -158,7 +163,7 @@ describe Rightnow::Client do
       stub_request(:get, /.*/).
         to_return(:status => 200, :body => fixture('search.json'))
       results = client.request 'Search'
-      results.should have(5).items
+      results.size.should == 5
       results.first.should == fixture('post.rb', :ruby)
     end
   end
@@ -177,7 +182,7 @@ describe Rightnow::Client do
     it { should include('PermissionedAs' => 'hl.api@hivelive.com') }
     it { should include('Signature' => 'vIONtWGXvdAG/McOTM0KuFD+O2g=') }
     it { should include('format' => 'json') }
-    its(:size) { should == 7 }
+    it { subject.size.should == 7 }
 
     context "with custom permission" do
       subject { client.send :signed_params, "Something", :as => 'email@domain.com' }
@@ -193,5 +198,14 @@ describe Rightnow::Client do
       it { should include('Signature' => 'vIONtWGXvdAG/McOTM0KuFD+O2g=') }
       it { should include('term' => 'white') }
     end
+
+    context "with custom user in client" do
+      before { client.user = 'api@domain.com' }
+
+      it { should include('PermissionedAs' => 'api@domain.com') }
+      it { should include('Signature' => 'tdUCB7FafhflaQ/pCIWK+NQnhMY=') }
+      it { should_not include('as') }
+    end
+
   end
 end

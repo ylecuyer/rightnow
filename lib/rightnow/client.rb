@@ -8,16 +8,18 @@ require 'rexml/document'
 
 module Rightnow
   class Client
-    attr_accessor :host, :api_key, :secret_key, :version
+    attr_accessor :host, :api_key, :secret_key, :version, :user, :debug
 
     def initialize host, opts = {}
       @host = host
       @api_key = opts[:api_key]
       @secret_key = opts[:secret_key]
+      @user = opts[:user] || 'hl.api@hivelive.com'
       @version = opts[:version] || '2010-05-15'
+      @debug = opts[:debug]
 
       @conn = Faraday.new(:url => host) do |faraday|
-        # faraday.response :logger
+        faraday.response :logger if @debug
         faraday.adapter  :typhoeus
       end
     end
@@ -185,10 +187,9 @@ module Rightnow
     end
 
     def request action, opts = {}
-      debug = opts.delete(:debug)
       verb = opts.delete(:verb) || :get
       response = @conn.send(verb, 'api/endpoint', signed_params(action, opts))
-      puts response.body if debug
+      puts response.body if @debug
       parse response
     end
 
@@ -220,7 +221,7 @@ module Rightnow
       params = {
         'Action' => action,
         'ApiKey' => api_key,
-        'PermissionedAs' => opts.delete(:as) || 'hl.api@hivelive.com',
+        'PermissionedAs' => opts.delete(:as) || @user,
         'SignatureVersion' => '2',
         'version' => version
       }

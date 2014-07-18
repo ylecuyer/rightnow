@@ -59,7 +59,7 @@ describe Rightnow::Models::Post do
     end
 
     it "stores fields details" do
-      post.fields.should have(2).items
+      post.fields.size.should == 2
       # Title
       post.fields.first.should be_instance_of(Rightnow::Models::Field)
       post.fields.first.id.should == 40695

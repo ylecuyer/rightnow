@@ -2,7 +2,7 @@ require 'rightnow'
 require 'webmock/rspec'
 
 RSpec.configure do |config|
-  config.color_enabled = true
+  config.color = true
 end
 
 # Simple helper loading fixture content and applying choosen parser
