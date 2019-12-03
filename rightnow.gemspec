@@ -6,11 +6,11 @@ require 'rightnow/version'
 Gem::Specification.new do |gem|
   gem.name          = "rightnow-client"
   gem.version       = Rightnow::VERSION
-  gem.authors       = ["Adrien Jarthon"]
-  gem.email         = ["adrien.jarthon@dimelo.com"]
+  gem.authors       = ["Adrien Rey-Jarthon"]
+  gem.email         = ["adrien.jarthon@ringcentral.com"]
   gem.description   = %q{Rightnow API Ruby wrapper}
   gem.summary       = %q{Ruby wrapper for the Oracle Rightnow Social API v2}
-  gem.homepage      = "https://github.com/dimelo/rightnow"
+  gem.homepage      = "https://github.com/jarthod/rightnow"
 
   gem.add_dependency 'faraday', '>= 0.8.0'
   gem.add_dependency 'virtus', '>= 1.0.0'
